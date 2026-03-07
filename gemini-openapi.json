@@ -1,0 +1,96 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Gemini API Extension",
+    "description": "Integração do Google Gemini com IBM Watson Assistant para geração de texto.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://generativelanguage.googleapis.com/v1beta"
+    }
+  ],
+  "paths": {
+    "/models/gemini-2.5-flash:generateContent": {
+      "post": {
+        "summary": "Gerar conteúdo de texto",
+        "operationId": "generateContent",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Sua chave de API do Google AI Studio",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contents": { "type": "array", "items": { "type": "object" } },
+                  "generationConfig": {
+                    "type": "object",
+                    "properties": {
+                      "maxOutputTokens": {
+                        "type": "integer",
+                        "description": "Limite máximo de tokens na resposta"
+                      },
+                      "temperature": {
+                        "type": "number",
+                        "description": "Criatividade (0.0 a 1.0)"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resposta bem-sucedida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "candidates": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "content": {
+                            "type": "object",
+                            "properties": {
+                              "parts": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "text": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
